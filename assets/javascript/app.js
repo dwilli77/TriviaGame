@@ -79,26 +79,62 @@ let trivia = [
     }
 ];
 
+// starts timer
 function countDown() {
     timer--;
     $('.time-counter').text(timer);
     if(timer === 0){
-        stop();
-        $('.result').html('<h3 class="time-up">Time\'s Up!<h2>');
+        timeOut();
     };
+}
+
+// runs if you don't answer a question in time
+function timeOut(){
+    $('.result').html('<h3 class="time-up">Time\'s Up!</h3><p class="correct-answer">Correct Answer: '+ trivia[questionProgress].answers.correctAnswer + '</p>');
+    timedOutReponses++;
+    stop();
 }
 
 function stop() {
     clearInterval(interval);
     questionProgress++;
-    setTimeout(nextQuestion, 1500);
+    setTimeout(nextQuestion, 3000);
 }
 
+// shuffles items within an array
+function shuffle(array) {
+    let currentIndex = array.length, temporaryValue, randomIndex;
+    while (0 !== currentIndex) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+    return array;
+  }
+
+  // populates the question's answer choices on the page
+  function displayAnswerChoices(arr){
+      for(let i = 0; i < arr.length;i++){
+        let answerDiv = $('<div class="answer-display">');
+        answerDiv.text(arr[i]);
+        $('.answer-area').append(answerDiv);
+      }
+  }
+
+//moves on to the next question
 function nextQuestion() {
     if(questionProgress < 10){
-        timer = 8;
+        $('.result').empty();
+        $('.answer-area').empty();
+        //resets timer
+        timer = 12;
+        $('.time-counter').text(timer);
         interval = setInterval(countDown, 1000);
+        //displays next question
         $('.question').text(trivia[questionProgress].question);
+        //randomize answers below question
         let positionArray = [];
         while(positionArray.length < 4){
             let num = Math.floor(Math.random() * 4);
@@ -106,7 +142,10 @@ function nextQuestion() {
                 positionArray.push(num);
             };
         };
-
+        let answersArray = trivia[questionProgress].answers.incorrectAnswers;
+        answersArray.push(trivia[questionProgress].answers.correctAnswer);
+        shuffle(answersArray);
+        displayAnswerChoices(answersArray);
     }else{
         // trigger endgame
     }
@@ -114,6 +153,6 @@ function nextQuestion() {
 
 
 $('.start-button').on('click', function() {
-    $('.result').empty();
+    $('.timer').removeClass('hidden');
     nextQuestion();
 })
