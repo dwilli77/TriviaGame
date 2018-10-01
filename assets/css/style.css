@@ -1,10 +1,25 @@
 
+body{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+}
 
+h1{
+    font-size: 60px;
+}
 .content-area {
+    text-align: center;
     width: 85%;
     margin: 10px auto;
+    padding: 10px 60px 30px 60px;
     background-color:pink;
 }
  .hidden{
      display:none;
+ }
+
+ .answer-display:hover{
+     cursor: pointer;
+     font-weight:bold;
+     text-decoration: underline;
  }
