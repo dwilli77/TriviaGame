@@ -67,8 +67,8 @@ let trivia = [
     {
         question: "Which is NOT a name of a major credit reporting agency?",
         answers: {
-            correctAnswer: "Lexus",
-            potentialAnswers: ["Trans Union", "Equifax", "Experian", "Lexus"]
+            correctAnswer: "Credit Karma",
+            potentialAnswers: ["Trans Union", "Equifax", "Experian", "Credit Karma"]
         }
     },
     {
@@ -154,6 +154,7 @@ function nextQuestion() {
     }else{ //triggers endgame if you're beyond 10th question
         $('.question').empty();
         if(correctResponses >= 7){
+            $('.timer').addClass('hidden');
             $('.result').text('Great job! You answered ' + correctResponses + ' correctly!');
             $('.question').text('You missed ' + incorrectReponses + ' questions, and didn\'t answer ' + timedOutReponses + ' questions');
         }else{
@@ -175,7 +176,7 @@ function nextQuestion() {
                 stop();
             }else{
                 incorrectReponses++;
-                $('.result').html('<h3 class="incorrect-redult">Wrong!</h3><p class="correct-answer">Correct Answer: '+ trivia[questionProgress].answers.correctAnswer + '</p>');
+                $('.result').html('<h3 class="incorrect-result">Wrong!</h3><p class="correct-answer">Correct Answer: '+ trivia[questionProgress].answers.correctAnswer + '</p>');
                 stop();
             }
         }
