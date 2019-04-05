@@ -14,3 +14,4 @@ This project uses:
   * jQuery
   * setTimeout/setInterval functionality
   
+![screenshot](./screenshot.PNG "Mortgage Trivia")
